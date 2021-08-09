@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="description" content="bedwars." />
+
+    <meta property="og:title" content="bedwars" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="bedwars." />
+
+    <!-- <link
+      rel="icon"
+      href="https://raw.githubusercontent.com/gamer-gang/gamerbot/master/assets/hexagon.png"
+    />
+    <link
+      rel="shortcut icon"
+      href="https://raw.githubusercontent.com/gamer-gang/gamerbot/master/assets/hexagon.png"
+    /> -->
+
+    <title>bedwars</title>
+
+    <%= htmlWebpackPlugin.options.preHead %>
+    <!-- comment so ejs tags arent folded -->
+    <%= htmlWebpackPlugin.tags.headTags %>
+    <!-- -->
+    <%= htmlWebpackPlugin.options.postHead %>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <%= htmlWebpackPlugin.options.preBody %>
+    <!-- -->
+    <%= htmlWebpackPlugin.tags.bodyTags %>
+    <!-- -->
+    <%= htmlWebpackPlugin.options.postBody %>
+  </body>
+</html>
