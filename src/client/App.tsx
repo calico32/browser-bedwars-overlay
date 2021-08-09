@@ -32,7 +32,7 @@ const App = (): JSX.Element => {
         const existing = players.find(row => row.username === username);
 
         if (error === 'error')
-          setPlayers(players => {
+          return setPlayers(players => {
             const arr = [...players];
             if (existing) arr.splice(arr.indexOf(existing), 1);
             arr.push({ username, error: errorMessage });

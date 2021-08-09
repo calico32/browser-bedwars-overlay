@@ -49,6 +49,9 @@ export const PlayerTable = ({
               <td className={`${bodyClasses(i)}`}>
                 {row.username} <span className="font-bold text-red-600">{row.error}</span>
               </td>
+              <td className={`${bodyClasses(i)}`}></td>
+              <td className={`${bodyClasses(i)}`}></td>
+              <td className={`${bodyClasses(i)}`}></td>
             </tr>
           ) : (
             <tr key={i}>
