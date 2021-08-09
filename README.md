@@ -1,1 +1,3 @@
-# bedwarsutil-server
+# bedwar overlay!
+
+readme coming soon™
