@@ -5,6 +5,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        ws_url: $WS_URL
     volumes:
       - logs:/app/logs
     env_file: .env

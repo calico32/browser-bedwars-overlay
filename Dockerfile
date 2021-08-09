@@ -13,6 +13,9 @@ RUN yarn
 
 COPY . .
 
+ARG ws_url
+ENV WS_URL=${ws_url}
+
 RUN yarn build
 
 
