@@ -21,6 +21,10 @@ const App = (): JSX.Element => {
 
     const ws = new WebSocket(process.env.WS_URL);
 
+    setInterval(() => {
+      ws.send('hb');
+    }, 5000);
+
     ws.addEventListener('message', event => {
       const [command, ...args] = (event.data as string).toString().trim().split('|');
 
