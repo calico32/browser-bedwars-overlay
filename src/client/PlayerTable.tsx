@@ -46,12 +46,9 @@ export const PlayerTable = ({
         {sortedPlayers.map((row, i) =>
           isError(row) ? (
             <tr key={i}>
-              <td className={`${bodyClasses(i)}`}>
+              <td className={`${bodyClasses(i)}`} colSpan={4}>
                 {row.username} <span className="font-bold text-red-600">{row.error}</span>
               </td>
-              <td className={`${bodyClasses(i)}`}></td>
-              <td className={`${bodyClasses(i)}`}></td>
-              <td className={`${bodyClasses(i)}`}></td>
             </tr>
           ) : (
             <tr key={i}>
