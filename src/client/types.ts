@@ -11,4 +11,5 @@ export interface PlayerRowSuccess {
   level: number;
   fkdr: number;
   wl: number;
+  ws: number;
 }

@@ -39,14 +39,15 @@ export const PlayerTable = ({
           <th className={`${headerClasses} w-full rounded-tl-lg`}>Player</th>
           <th className={`${headerClasses} px-4`}>Level</th>
           <th className={`${headerClasses} px-4`}>FKDR</th>
-          <th className={`${headerClasses} px-4 rounded-tr-lg `}>W/L</th>
+          <th className={`${headerClasses} px-4 rounded-tr-lg`}>W/L</th>
+          <th className={`${headerClasses} px-4 rounded-tr-lg`}>WS</th>
         </tr>
       </thead>
       <tbody>
         {sortedPlayers.map((row, i) =>
           isError(row) ? (
             <tr key={i}>
-              <td className={`${bodyClasses(i)}`} colSpan={4}>
+              <td className={`${bodyClasses(i)}`} colSpan={5}>
                 {row.username} <span className="font-bold text-red-600">{row.error}</span>
               </td>
             </tr>
@@ -58,6 +59,7 @@ export const PlayerTable = ({
               <td className={`${bodyClasses(i)}`}>{row.level}</td>
               <td className={`${bodyClasses(i)}`}>{row.fkdr}</td>
               <td className={`${bodyClasses(i)}`}>{row.wl}</td>
+              <td className={`${bodyClasses(i)}`}>{row.ws}</td>
             </tr>
           )
         )}

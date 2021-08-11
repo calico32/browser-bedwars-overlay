@@ -57,11 +57,12 @@ inputServer.on('connection', (socket, request) => {
         let fkdr = round((bedwars.final_kills_bedwars ?? 0) / (bedwars.final_deaths_bedwars ?? 0));
         let wl = round((bedwars.wins_bedwars ?? 0) / (bedwars.losses_bedwars ?? 0));
         const level = Math.floor(getLevelForExp(bedwars.Experience ?? 0));
+        const ws = bedwars.winstreak ?? 0;
 
         if (isNaN(fkdr) && !bedwars.final_kills_bedwars && !bedwars.final_deaths_bedwars) fkdr = 0;
         if (isNaN(wl) && !bedwars.wins_bedwars && !bedwars.losses_bedwars) wl = 0;
 
-        emitAll(`add|${args[0]}|${getRankPlaintext(player!)}|${level}|${fkdr}|${wl}`);
+        emitAll(`add|${args[0]}|${getRankPlaintext(player!)}|${level}|${fkdr}|${wl}|${ws}`);
       } catch (err) {
         emitAll(`add|${args[0]}|error|${err.message}`);
       }

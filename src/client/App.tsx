@@ -22,22 +22,23 @@ const App = (): JSX.Element => {
       if (command === 'add') {
         const [username, error, errorMessage] = args;
 
-        const existing = players.find(row => row.username === username);
+        const existing = players.findIndex(row => row.username === username);
 
         if (error === 'error')
           return setPlayers(players => {
             const arr = [...players];
-            if (existing) arr.splice(arr.indexOf(existing), 1);
+            if (existing !== -1) arr.splice(existing, 1);
             arr.push({ username, error: errorMessage });
             // console.log('state', arr);
             return arr;
           });
 
-        const [, rank, level, fkdr, wl] = args;
+        const [, rank, level, fkdr, wl, ws] = args;
 
         const parsedLevel = parseInt(level);
         const parsedFkdr = parseFloat(fkdr);
         const parsedWl = parseFloat(wl);
+        const parsedWs = parseInt(wl);
 
         const row: PlayerRow = {
           username,
@@ -45,22 +46,23 @@ const App = (): JSX.Element => {
           level: parsedLevel,
           fkdr: parsedFkdr,
           wl: parsedWl,
+          ws: parsedWs,
         };
 
         setPlayers(players => {
           const arr = [...players];
-          if (existing) arr.splice(arr.indexOf(existing), 1);
+          if (existing !== -1) arr.splice(existing, 1);
           arr.push(row);
           // console.log('state', arr);
           return arr;
         });
       } else if (command === 'remove') {
-        const existing = players.find(row => row.username === args[0]);
-        if (!existing) return;
+        const existing = players.findIndex(row => row.username === args[0]);
+        if (existing === -1) return;
 
         setPlayers(players => {
           const arr = [...players];
-          arr.splice(arr.indexOf(existing), 1);
+          arr.splice(existing, 1);
           // console.log('state', arr);
           return arr;
         });
@@ -78,7 +80,7 @@ const App = (): JSX.Element => {
 
   return (
     <main className="flex items-center justify-center m-4">
-      <PlayerTable players={players} className="max-w-xl" />
+      <PlayerTable players={players} className="max-w-2xl" />
     </main>
   );
 };
