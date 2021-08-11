@@ -39,7 +39,7 @@ export const PlayerTable = ({
           <th className={`${headerClasses} w-full rounded-tl-lg`}>Player</th>
           <th className={`${headerClasses} px-4`}>Level</th>
           <th className={`${headerClasses} px-4`}>FKDR</th>
-          <th className={`${headerClasses} px-4 rounded-tr-lg`}>W/L</th>
+          <th className={`${headerClasses} px-4`}>W/L</th>
           <th className={`${headerClasses} px-4 rounded-tr-lg`}>WS</th>
         </tr>
       </thead>
