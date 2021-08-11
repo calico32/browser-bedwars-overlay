@@ -3,7 +3,7 @@ import { Socket } from 'net';
 import { URL } from 'url';
 import WebSocket, { Server } from 'ws';
 import { StatsProvider } from './StatsProvider';
-import { getLevelForExp } from './util';
+import { getLevelForExp, getRankPlaintext } from './util';
 
 const inputServer = new Server({ noServer: true });
 const outputServer = new Server({ noServer: true });
@@ -46,6 +46,7 @@ inputServer.on('connection', (socket, request) => {
     if (command === 'add') {
       try {
         const player = await statsProvider.get(args[0]);
+        if (player === null) throw new Error('NOT_FOUND');
 
         const bedwars = player?.stats.Bedwars;
 
@@ -53,13 +54,14 @@ inputServer.on('connection', (socket, request) => {
 
         const round = (n: number) => Math.round(n * 100) / 100;
 
-        const fkdr = round(
-          (bedwars.final_kills_bedwars ?? 0) / (bedwars.final_deaths_bedwars ?? 0)
-        );
-        const wl = round((bedwars.wins_bedwars ?? 0) / (bedwars.losses_bedwars ?? 0));
+        let fkdr = round((bedwars.final_kills_bedwars ?? 0) / (bedwars.final_deaths_bedwars ?? 0));
+        let wl = round((bedwars.wins_bedwars ?? 0) / (bedwars.losses_bedwars ?? 0));
         const level = Math.floor(getLevelForExp(bedwars.Experience ?? 0));
 
-        emitAll(`add|${args[0]}|${level}|${fkdr}|${wl}`);
+        if (isNaN(fkdr) && !bedwars.final_kills_bedwars && !bedwars.final_deaths_bedwars) fkdr = 0;
+        if (isNaN(wl) && !bedwars.wins_bedwars && !bedwars.losses_bedwars) wl = 0;
+
+        emitAll(`add|${args[0]}|${getRankPlaintext(player!)}|${level}|${fkdr}|${wl}`);
       } catch (err) {
         emitAll(`add|${args[0]}|error|${err.message}`);
       }

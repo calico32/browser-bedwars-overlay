@@ -7,6 +7,7 @@ export interface PlayerRowError {
 
 export interface PlayerRowSuccess {
   username: string;
+  rank: string;
   level: number;
   fkdr: number;
   wl: number;

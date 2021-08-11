@@ -31,15 +31,15 @@ export class UuidCache extends Map<string, string> {
 }
 
 export class StatsProvider {
-  map = new Map<string, Player>();
+  map = new Map<string, Player | null>();
   uuidCache = new UuidCache();
 
   constructor(private key: string) {}
 
-  async get(username: string): Promise<Player | undefined> {
+  async get(username: string): Promise<Player | null | undefined> {
     username = username.trim();
 
-    if (!this.map.has(username)) {
+    if (this.map.get(username) === undefined) {
       const response = await axios.get('https://api.hypixel.net/player', {
         params: {
           key: this.key,
@@ -53,9 +53,9 @@ export class StatsProvider {
       if (response.status !== 200 || !data.success)
         throw new Error(`REQUEST_FAILED_${response.status}|${response.statusText}`);
 
-      if (!data.player) throw new Error('NOT_FOUND');
+      if (!data.player) this.map.set(username, null);
+      else this.map.set(username, data.player);
 
-      this.map.set(username, data.player);
       setTimeout(() => this.map.delete(data.player!.uuid!), 1000 * 60 * 5);
     }
 

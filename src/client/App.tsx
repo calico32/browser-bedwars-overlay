@@ -2,17 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { PlayerTable } from './PlayerTable';
 import { PlayerRow } from './types';
 
-const randomRow = (): PlayerRow => {
-  return {
-    username: (
-      Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
-    ).substring(0, 20),
-    fkdr: Math.round(Math.random() * 20 * 100) / 100,
-    wl: Math.round(Math.random() * 10 * 100) / 100,
-    level: Math.round(Math.random() * 100),
-  };
-};
-
 const App = (): JSX.Element => {
   const [players, setPlayers] = useState<PlayerRow[]>([]);
 
@@ -44,7 +33,7 @@ const App = (): JSX.Element => {
             return arr;
           });
 
-        const [, level, fkdr, wl] = args;
+        const [, rank, level, fkdr, wl] = args;
 
         const parsedLevel = parseInt(level);
         const parsedFkdr = parseFloat(fkdr);
@@ -52,6 +41,7 @@ const App = (): JSX.Element => {
 
         const row: PlayerRow = {
           username,
+          rank,
           level: parsedLevel,
           fkdr: parsedFkdr,
           wl: parsedWl,

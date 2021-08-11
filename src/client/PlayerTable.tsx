@@ -52,7 +52,9 @@ export const PlayerTable = ({
             </tr>
           ) : (
             <tr key={i}>
-              <td className={`${bodyClasses(i)}`}>{row.username}</td>
+              <td className={`${bodyClasses(i)}`}>
+                {row.rank !== '' ? `${row.rank} ${row.username}` : row.username}
+              </td>
               <td className={`${bodyClasses(i)}`}>{row.level}</td>
               <td className={`${bodyClasses(i)}`}>{row.fkdr}</td>
               <td className={`${bodyClasses(i)}`}>{row.wl}</td>
