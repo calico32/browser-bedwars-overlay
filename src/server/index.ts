@@ -81,6 +81,8 @@ outputServer.on('connection', (socket, request) => {
   socket.on('message', message => {
     // const [command, ...args] = message.toString().trim().split('|');
 
+    if (message.toString() === 'hb') return;
+
     console.log(`[os] rx | ${message.toString()}`);
   });
 

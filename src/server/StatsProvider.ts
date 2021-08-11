@@ -36,19 +36,14 @@ export class StatsProvider {
 
   constructor(private key: string) {}
 
-  async get(identifier: string): Promise<Player | undefined> {
-    identifier = identifier.trim();
+  async get(username: string): Promise<Player | undefined> {
+    username = username.trim();
 
-    const isUuid = uuidRegex.test(identifier);
-
-    const potentialUuid = isUuid ? identifier.replace(/-/g, '') : this.uuidCache.get(identifier);
-
-    if (!this.map.has(potentialUuid ?? '')) {
+    if (!this.map.has(username)) {
       const response = await axios.get('https://api.hypixel.net/player', {
         params: {
           key: this.key,
-          uuid: isUuid ? encodeURIComponent(identifier) : undefined,
-          name: isUuid ? undefined : encodeURIComponent(identifier),
+          name: encodeURIComponent(username),
         },
         validateStatus: () => true,
       });
@@ -56,17 +51,14 @@ export class StatsProvider {
       const data = response.data as PlayerResponse;
 
       if (response.status !== 200 || !data.success)
-        throw new Error(`REQUEST_FAILED|${response.status}|${response.statusText}`);
+        throw new Error(`REQUEST_FAILED_${response.status}|${response.statusText}`);
 
       if (!data.player) throw new Error('NOT_FOUND');
 
-      this.map.set(data.player.uuid, data.player);
+      this.map.set(username, data.player);
       setTimeout(() => this.map.delete(data.player!.uuid!), 1000 * 60 * 5);
-
-      this.uuidCache.set(data.player.playername, data.player.uuid);
-      setTimeout(() => this.uuidCache.delete(data.player!.playername), 1000 * 60 * 15);
     }
 
-    return this.map.get(isUuid ? identifier.replace(/-/g, '') : this.uuidCache.get(identifier)!);
+    return this.map.get(username);
   }
 }
