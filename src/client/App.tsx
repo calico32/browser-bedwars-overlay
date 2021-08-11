@@ -78,7 +78,7 @@ const App = (): JSX.Element => {
 
   return (
     <main className="flex items-center justify-center m-4">
-      <PlayerTable players={players} className="max-w-lg" />
+      <PlayerTable players={players} className="max-w-xl" />
     </main>
   );
 };
