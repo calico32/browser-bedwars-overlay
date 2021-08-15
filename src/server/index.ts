@@ -1,14 +1,14 @@
+import axios from 'axios';
 import { createServer } from 'http';
+import { HypixelCacheResponse } from 'hypixel-cache';
 import { Socket } from 'net';
 import { URL } from 'url';
 import WebSocket, { Server } from 'ws';
-import { StatsProvider } from './StatsProvider';
 import { getLevelForExp, getRankPlaintext } from './util';
 
 const inputServer = new Server({ noServer: true });
 const outputServer = new Server({ noServer: true });
 const httpServer = createServer();
-const statsProvider = new StatsProvider(process.env.HYPIXEL_API_KEY!);
 
 httpServer.on('upgrade', (request, socket, head) => {
   const { pathname } = new URL(request.url!, `http://${request.headers.host}`);
@@ -45,11 +45,22 @@ inputServer.on('connection', (socket, request) => {
 
     if (command === 'add') {
       try {
-        const player = await statsProvider.get(args[0]);
-        if (player === null) throw new Error('NOT_FOUND');
+        const response = await axios.get(`${process.env.HYPIXEL_CACHE_URL}/name/${args[0]}`, {
+          headers: { 'X-Secret': process.env.HYPIXEL_CACHE_SECRET },
+          validateStatus: () => true,
+        });
+
+        const data = response.data as HypixelCacheResponse;
+
+        if (response.status === 429) return emitAll(`add|${args[0]}|error|RATELIMIT`);
+
+        if (!data.success)
+          return emitAll(`add|${args[0]}|error|${data.error.toUpperCase().replace(/ /g, '_')}`);
+
+        const player = data.player;
+        if (player === null || response.status === 404) throw new Error('NOT_FOUND');
 
         const bedwars = player?.stats.Bedwars;
-
         if (!bedwars) throw new Error('NO_BEDWARS_STATS');
 
         const round = (n: number) => Math.round(n * 100) / 100;

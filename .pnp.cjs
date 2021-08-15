@@ -61,6 +61,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["file-loader", "virtual:f119459e14b59adfdbdbde51fa67319a8d87e809b5feeb8584b322de5545b2580f4d8592bd3c2f66cda04c34914c966bb84476a854b1a0453a9215611eacfa5f#npm:6.2.0"],
             ["fork-ts-checker-webpack-plugin", "virtual:f119459e14b59adfdbdbde51fa67319a8d87e809b5feeb8584b322de5545b2580f4d8592bd3c2f66cda04c34914c966bb84476a854b1a0453a9215611eacfa5f#npm:6.3.1"],
             ["html-webpack-plugin", "virtual:f119459e14b59adfdbdbde51fa67319a8d87e809b5feeb8584b322de5545b2580f4d8592bd3c2f66cda04c34914c966bb84476a854b1a0453a9215611eacfa5f#npm:5.3.2"],
+            ["hypixel-cache", "https://github.com/wiisportsresort/hypixel-cache.git#commit=9bf9f8d5fd1a67845751d2d5d585dc607dfb97c2"],
             ["hypixel-types", "https://github.com/wiisportsresort/hypixel-types.git#commit=cddb69ce1166744a72be48f56f03feb526bb852c"],
             ["lodash", "npm:4.17.21"],
             ["mini-css-extract-plugin", "virtual:f119459e14b59adfdbdbde51fa67319a8d87e809b5feeb8584b322de5545b2580f4d8592bd3c2f66cda04c34914c966bb84476a854b1a0453a9215611eacfa5f#npm:2.2.0"],
@@ -1808,6 +1809,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["file-loader", "virtual:f119459e14b59adfdbdbde51fa67319a8d87e809b5feeb8584b322de5545b2580f4d8592bd3c2f66cda04c34914c966bb84476a854b1a0453a9215611eacfa5f#npm:6.2.0"],
             ["fork-ts-checker-webpack-plugin", "virtual:f119459e14b59adfdbdbde51fa67319a8d87e809b5feeb8584b322de5545b2580f4d8592bd3c2f66cda04c34914c966bb84476a854b1a0453a9215611eacfa5f#npm:6.3.1"],
             ["html-webpack-plugin", "virtual:f119459e14b59adfdbdbde51fa67319a8d87e809b5feeb8584b322de5545b2580f4d8592bd3c2f66cda04c34914c966bb84476a854b1a0453a9215611eacfa5f#npm:5.3.2"],
+            ["hypixel-cache", "https://github.com/wiisportsresort/hypixel-cache.git#commit=9bf9f8d5fd1a67845751d2d5d585dc607dfb97c2"],
             ["hypixel-types", "https://github.com/wiisportsresort/hypixel-types.git#commit=cddb69ce1166744a72be48f56f03feb526bb852c"],
             ["lodash", "npm:4.17.21"],
             ["mini-css-extract-plugin", "virtual:f119459e14b59adfdbdbde51fa67319a8d87e809b5feeb8584b322de5545b2580f4d8592bd3c2f66cda04c34914c966bb84476a854b1a0453a9215611eacfa5f#npm:2.2.0"],
@@ -4778,6 +4780,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["humanize-ms", "npm:1.2.1"],
             ["ms", "npm:2.1.3"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["hypixel-cache", [
+        ["https://github.com/wiisportsresort/hypixel-cache.git#commit=9bf9f8d5fd1a67845751d2d5d585dc607dfb97c2", {
+          "packageLocation": "./.yarn/cache/hypixel-cache-https-9fdd44cacd-a28ff62d06.zip/node_modules/hypixel-cache/",
+          "packageDependencies": [
+            ["hypixel-cache", "https://github.com/wiisportsresort/hypixel-cache.git#commit=9bf9f8d5fd1a67845751d2d5d585dc607dfb97c2"]
           ],
           "linkType": "HARD",
         }]

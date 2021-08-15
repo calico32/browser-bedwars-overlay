@@ -49,6 +49,7 @@
     "file-loader": "^6.2.0",
     "fork-ts-checker-webpack-plugin": "^6.3.1",
     "html-webpack-plugin": "^5.3.2",
+    "hypixel-cache": "https://github.com/wiisportsresort/hypixel-cache.git",
     "hypixel-types": "https://github.com/wiisportsresort/hypixel-types.git#commit=cddb69ce1166744a72be48f56f03feb526bb852c",
     "mini-css-extract-plugin": "^2.2.0",
     "node-loader": "^2.0.0",
