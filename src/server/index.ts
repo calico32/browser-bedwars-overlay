@@ -52,28 +52,36 @@ inputServer.on('connection', (socket, request) => {
 
         const data = response.data as HypixelCacheResponse;
 
-        if (response.status === 429) return emitAll(`add|${args[0]}|error|RATELIMIT`);
+        if (response.status === 429) throw new Error(`${response.status}_RATELIMIT`);
 
-        if (!data.success)
-          return emitAll(`add|${args[0]}|error|${data.error.toUpperCase().replace(/ /g, '_')}`);
+        if (!data.success) {
+          const message = data.error?.toUpperCase().replace(/ /g, '_');
+          throw new Error(
+            message ? `${response.status}_${message}` : `${response.status}_UNKNOWN_ERROR`
+          );
+        }
 
         const player = data.player;
-        if (player === null || response.status === 404) throw new Error('NOT_FOUND');
+        if (!player || response.status === 404)
+          throw new Error(`${response.status}_PLAYER_NOT_FOUND`);
 
-        const bedwars = player?.stats.Bedwars;
-        if (!bedwars) throw new Error('NO_BEDWARS_STATS');
+        const bedwars = player.stats.Bedwars;
+        if (!bedwars) throw new Error(`${response.status}_NO_BEDWARS_STATS`);
 
         const round = (n: number) => Math.round(n * 100) / 100;
 
-        let fkdr = round((bedwars.final_kills_bedwars ?? 0) / (bedwars.final_deaths_bedwars ?? 0));
-        let wl = round((bedwars.wins_bedwars ?? 0) / (bedwars.losses_bedwars ?? 0));
+        const fk = bedwars.final_kills_bedwars ?? 0;
+        const fd = bedwars.final_deaths_bedwars ?? 0;
+        const fkdr = fk && fd ? round(fk / fd) : fk ? fk + '/0' : '0/0';
+
+        const wins = bedwars.wins_bedwars ?? 0;
+        const losses = bedwars.losses_bedwars ?? 0;
+        const wl = wins && losses ? round(wins / losses) : wins ? wins + '/0' : '0/0';
+
         const level = Math.floor(getLevelForExp(bedwars.Experience ?? 0));
         const ws = bedwars.winstreak ?? 0;
 
-        if (isNaN(fkdr) && !bedwars.final_kills_bedwars && !bedwars.final_deaths_bedwars) fkdr = 0;
-        if (isNaN(wl) && !bedwars.wins_bedwars && !bedwars.losses_bedwars) wl = 0;
-
-        emitAll(`add|${args[0]}|${getRankPlaintext(player!)}|${level}|${fkdr}|${wl}|${ws}`);
+        emitAll(`add|${args[0]}|${getRankPlaintext(player)}|${level}|${fkdr}|${wl}|${ws}`);
       } catch (err) {
         emitAll(`add|${args[0]}|error|${err.message}`);
       }
